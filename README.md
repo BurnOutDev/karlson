@@ -22,6 +22,17 @@ The API listens on http://localhost:5080 and applies its migrations on start in 
 Vite serves the UI on http://localhost:5173 and proxies `/api` to the API. `npm --prefix web run build`
 writes the production bundle into `src/Karlson.Api/wwwroot`, which the API serves itself.
 
+## Tests
+
+```bash
+dotnet test
+```
+
+Domain tests run in memory. The tests under `tests/Karlson.Api.Tests/Http` start the real API
+against a throwaway Postgres container (Docker must be running). The `catalog` schema there is
+a small fixture in `ApiFixture.cs` with only the columns this app reads, so it doubles as the
+written-down contract with the ingestion repo.
+
 ## Layout
 
 - `src/Karlson.Api/Domain/` - aggregates with behaviour (`Household` with its `Member`s).

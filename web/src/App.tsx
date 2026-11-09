@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { Navigate, NavLink, Route, Routes } from "react-router-dom";
-import { Carrot, Home, LogOut } from "lucide-react";
+import { Database, Home, LogOut } from "lucide-react";
 import { api, ApiError } from "@/api";
 import { cn } from "@/lib/utils";
 import JoinPage from "@/pages/JoinPage";
@@ -48,13 +48,13 @@ export default function App() {
   return (
     <div className="mx-auto flex min-h-screen max-w-5xl flex-col">
       <header className="flex items-center justify-between gap-4 border-b px-4 py-3">
-        <div className="font-semibold">Karlson · {household.name}</div>
+        <div className="min-w-0 truncate font-semibold">Karlson · {household.name}</div>
         <nav className="flex items-center gap-1">
           <NavLink to="/household" className={link}>
-            <Home className="size-4" /> Household
+            <Home className="size-4" /> <span className="hidden sm:inline">Household</span>
           </NavLink>
-          <NavLink to="/ingredients" className={link}>
-            <Carrot className="size-4" /> Ingredients
+          <NavLink to="/data/ingredients" className={link} title="Catalog data behind the plans: ingredients and store prices">
+            <Database className="size-4" /> <span className="hidden sm:inline">Data</span>
           </NavLink>
           <button onClick={leave} className={link({ isActive: false })} title="Leave this household on this device">
             <LogOut className="size-4" />
@@ -64,7 +64,8 @@ export default function App() {
       <main className="flex-1 px-4 py-6">
         <Routes>
           <Route path="/household" element={<HouseholdPage household={household} />} />
-          <Route path="/ingredients" element={<IngredientsPage />} />
+          <Route path="/data/ingredients" element={<IngredientsPage />} />
+          <Route path="/ingredients" element={<Navigate to="/data/ingredients" replace />} />
           <Route path="*" element={<Navigate to="/household" replace />} />
         </Routes>
       </main>

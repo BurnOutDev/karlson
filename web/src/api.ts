@@ -16,6 +16,9 @@ export type Ingredient = {
   nameRu: string | null;
   category: string;
   tags: string[];
+  /** How recipes count it: g, ml or pcs. */
+  defaultUnit: string;
+  gramsPerPiece: number | null;
   offers: StoreOffer[];
 };
 export type Product = {
@@ -24,14 +27,19 @@ export type Product = {
   name: string;
   brand: string | null;
   price: number;
+  /** Set only while the product is discounted. */
+  regularPrice: number | null;
   unitQty: number | null;
   unit: string | null;
-  pricePerKg: number | null;
+  /** ₾ per kg (g), per litre (ml) or per piece (pcs). */
+  pricePerUnit: number | null;
+  /** "weight": the price is for one step of unitQty, bought in multiples of it. */
+  soldBy: "package" | "weight";
   url: string | null;
   imageUrl: string | null;
   confidence: number;
 };
-export type Store = { id: string; name: string; type: string; url: string | null };
+export type Store = { id: string; name: string; type: string; url: string | null; city: string | null; address: string | null };
 
 export const DIET_TYPES: { value: string; label: string }[] = [
   { value: "normal", label: "Normal" },

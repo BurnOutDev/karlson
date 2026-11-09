@@ -95,6 +95,12 @@ public class CatalogIngredient
     public string Category { get; set; } = "";
     public string[] Tags { get; set; } = [];
     public string[] Aliases { get; set; } = [];
+
+    /// <summary>How recipes count it: g, ml or pcs.</summary>
+    public string DefaultUnit { get; set; } = "g";
+
+    /// <summary>Weight of one piece; null for things nobody counts.</summary>
+    public decimal? GramsPerPiece { get; set; }
 }
 
 public class CatalogStore
@@ -103,6 +109,8 @@ public class CatalogStore
     public string Name { get; set; } = "";
     public string Type { get; set; } = "";
     public string? Url { get; set; }
+    public string? City { get; set; }
+    public string? Address { get; set; }
 }
 
 /// <summary>Each store's products from its latest successful scrape.</summary>
@@ -114,11 +122,22 @@ public class CurrentStoreProduct
     public string ExternalId { get; set; } = "";
     public string Name { get; set; } = "";
     public string? Brand { get; set; }
+    /// <summary>What you pay now.</summary>
     public decimal Price { get; set; }
+
+    /// <summary>Price before discount; null when the product is not on sale.</summary>
+    public decimal? RegularPrice { get; set; }
     public string Currency { get; set; } = "GEL";
     public string? UnitRaw { get; set; }
     public decimal? UnitQty { get; set; }
     public string? Unit { get; set; }
+
+    /// <summary>₾ per kg (g), per litre (ml) or per piece (pcs).</summary>
+    public decimal? PricePerUnit { get; set; }
+
+    /// <summary>"package": price buys the whole pack. "weight": price is for one step of UnitQty.</summary>
+    public string SoldBy { get; set; } = "package";
+    public string? Barcode { get; set; }
     public string? Category { get; set; }
     public string? Url { get; set; }
     public string? ImageUrl { get; set; }
